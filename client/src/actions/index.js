@@ -6,6 +6,7 @@ export const signup = (formProps, callback) => dispatch => {
     axios.post('http://localhost:3090/signup', formProps)
         .then(res => {
             dispatch({ type: AUTH_USER, payload: res.data.token });
+            localStorage.setItem('token', res.data.token);
             callback();
         })
         .catch(e => {
