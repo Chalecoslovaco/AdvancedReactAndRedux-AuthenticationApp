@@ -14,3 +14,12 @@ export const signup = (formProps, callback) => dispatch => {
             dispatch({ type: AUTH_ERROR, payload: 'Email already in use' });
         });
 };
+
+export const signout = () => {
+    localStorage.removeItem('token');
+
+    return {
+        type: AUTH_USER,
+        payload: ''
+    }
+}
