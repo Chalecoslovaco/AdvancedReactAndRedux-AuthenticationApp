@@ -7,7 +7,7 @@ const User = require('../models/user');
 const config = require('../config');
 
 // Local Strategy
-const localOptions = { userNameField: 'email'};
+const localOptions = { usernameField: 'email'};
 const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
     // Verify user email and password
     // If correct call done with the user, if not call done with false
