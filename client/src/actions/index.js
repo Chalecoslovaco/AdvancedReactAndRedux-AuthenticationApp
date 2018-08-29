@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import { AUTH_USER, AUTH_ERROR } from './types';
 
-export const signup = (formProps, callback) => dispatch => {
-    axios.post('http://localhost:3090/signup', formProps)
+export const sign = (formProps, signType, callback) => dispatch => {
+    axios.post(`http://localhost:3090/${signType}`, formProps)
         .then(res => {
             dispatch({ type: AUTH_USER, payload: res.data.token });
             localStorage.setItem('token', res.data.token);
@@ -11,20 +11,10 @@ export const signup = (formProps, callback) => dispatch => {
         })
         .catch(e => {
             console.log(e);
-            dispatch({ type: AUTH_ERROR, payload: 'Email already in use' });
-        });
-};
-
-export const signin = (formProps, callback) => dispatch => {
-    axios.post('http://localhost:3090/signin', formProps)
-        .then(res => {
-            dispatch({ type: AUTH_USER, payload: res.data.token });
-            localStorage.setItem('token', res.data.token);
-            callback();
-        })
-        .catch(e => {
-            console.log(e);
-            dispatch({ type: AUTH_ERROR, payload: 'Invalid email or password' });
+            if(signType === 'signin')
+                dispatch({ type: AUTH_ERROR, payload: 'Invalid email or password' });
+            else if (signType === 'signup')
+                dispatch({ type: AUTH_ERROR, payload: 'Email already in use' });
         });
 };
 
